@@ -1,0 +1,6 @@
+{
+  "name": "Líder - Gestor de Frota",
+  "description": "Sistema moderno e completo para gestão de frotas corporativas com controle diário de quilometragem inicial e final, gestão de motoristas, manutenção preventiva e relatórios.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

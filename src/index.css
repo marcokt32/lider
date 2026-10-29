@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html, body {
+    background-color: #ffffff;
+    color: #0f172a;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  html.dark, html.dark body {
+    background-color: #0b0f19;
+    color: #f8fafc;
+  }
+}
+
+/* ============================================================
+   NOTIFICATION COMPONENT RESPONSIVE POSITIONING & SAFE INSETS
+   ============================================================ */
+
+.notification-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.notification-popover {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  width: 24rem;
+  max-width: 95vw;
+  z-index: 50;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+}
+
+.notification-scroll-body {
+  max-height: 20rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Specific media query for mobile devices (<= 640px) to prevent layout break and overlapping */
+@media screen and (max-width: 640px) {
+  .notification-popover {
+    position: fixed !important;
+    top: 4.25rem !important; /* Positioned directly below sticky header */
+    left: 0.75rem !important;
+    right: 0.75rem !important;
+    width: auto !important;
+    max-width: calc(100vw - 1.5rem) !important;
+    max-height: calc(100dvh - 5.5rem) !important;
+    margin: 0 !important;
+    transform: none !important;
+    border-radius: 1.25rem !important;
+    box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.35), 0 10px 12px -5px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .notification-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 48 !important;
+    background-color: rgba(15, 23, 42, 0.55) !important;
+  }
+
+  .notification-scroll-body {
+    max-height: calc(100dvh - 16rem) !important;
+    min-height: 8rem !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+/* Very narrow mobile devices (<= 380px) */
+@media screen and (max-width: 380px) {
+  .notification-popover {
+    left: 0.5rem !important;
+    right: 0.5rem !important;
+    max-width: calc(100vw - 1rem) !important;
+    top: 3.75rem !important;
+  }
+}
+
+/* ============================================================
+   MOBILE CAROUSEL UTILITIES FOR VEHICLES & DRIVERS
+   ============================================================ */
+
+.mobile-carousel-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+}
+
+.mobile-carousel-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.mobile-carousel-container::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+
+.mobile-carousel-card {
+  scroll-snap-align: center;
+  flex: 0 0 88%;
+  max-width: 88%;
+}
+
+@media (min-width: 640px) {
+  .mobile-carousel-card {
+    flex: 0 0 calc(50% - 0.5rem);
+    max-width: calc(50% - 0.5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-carousel-card {
+    flex: 0 0 calc(33.333% - 0.67rem);
+    max-width: calc(33.333% - 0.67rem);
+  }
+}

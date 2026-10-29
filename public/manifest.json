@@ -1,0 +1,17 @@
+{
+  "short_name": "Líder Frota",
+  "name": "Líder - Gestor de Frota",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0f172a",
+  "theme_color": "#1d4ed8",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "description": "Gestão de frota, controle diário de KM inicial e final, motoristas e manutenção preventiva."
+}

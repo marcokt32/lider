@@ -1,0 +1,128 @@
+{
+  "entities": {
+    "Vehicle": {
+      "title": "Vehicle",
+      "description": "Veículo da frota da empresa",
+      "type": "object",
+      "properties": {
+        "adminId": { "type": "string", "description": "ID do gestor responsável" },
+        "plate": { "type": "string", "description": "Placa do veículo (padrão Mercosul ou antigo)" },
+        "model": { "type": "string", "description": "Modelo do carro (ex: Gol, Strada, Onix)" },
+        "brand": { "type": "string", "description": "Marca/Fabricante (ex: Fiat, VW, Chevrolet)" },
+        "year": { "type": "number", "description": "Ano de fabricação" },
+        "currentKm": { "type": "number", "description": "Quilometragem atual do veículo" },
+        "lastMaintenanceKm": { "type": "number", "description": "KM da última manutenção realizada" },
+        "maintenanceIntervalKm": { "type": "number", "description": "Intervalo para revisão preventiva (ex: 10000)" },
+        "status": { "type": "string", "enum": ["disponivel", "em_uso", "manutencao"], "description": "Status operacional do veículo" },
+        "currentDriverId": { "type": "string", "description": "ID do motorista atualmente em viagem, se houver" },
+        "currentDriverName": { "type": "string", "description": "Nome do motorista em viagem" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["adminId", "plate", "model", "currentKm", "maintenanceIntervalKm", "status"]
+    },
+    "Driver": {
+      "title": "Driver",
+      "description": "Motorista cadastrado na frota",
+      "type": "object",
+      "properties": {
+        "adminId": { "type": "string", "description": "ID do gestor" },
+        "name": { "type": "string", "description": "Nome completo do motorista" },
+        "email": { "type": "string", "description": "E-mail do motorista" },
+        "phone": { "type": "string", "description": "Telefone de contato WhatsApp" },
+        "cnhNumber": { "type": "string", "description": "Número de registro da CNH" },
+        "cnhCategory": { "type": "string", "description": "Categoria da CNH (ex: B, AB, C, D, E)" },
+        "cnhExpiration": { "type": "string", "description": "Data de validade da CNH (AAAA-MM-DD)" },
+        "status": { "type": "string", "enum": ["ativo", "inativo", "em_viagem"], "description": "Status do motorista" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["adminId", "name", "cnhNumber", "status"]
+    },
+    "DailyTrip": {
+      "title": "DailyTrip",
+      "description": "Registro diário de uso do veículo (KM inicial e final)",
+      "type": "object",
+      "properties": {
+        "adminId": { "type": "string", "description": "ID do gestor" },
+        "vehicleId": { "type": "string", "description": "ID do veículo utilizado" },
+        "vehiclePlate": { "type": "string", "description": "Placa do veículo" },
+        "driverId": { "type": "string", "description": "ID do motorista responsável no dia" },
+        "driverName": { "type": "string", "description": "Nome do motorista" },
+        "date": { "type": "string", "description": "Data da jornada (AAAA-MM-DD)" },
+        "startKm": { "type": "number", "description": "KM Inicial registrado na saída" },
+        "endKm": { "type": "number", "description": "KM Final registrado no retorno" },
+        "startTime": { "type": "string", "description": "Horário de início (HH:mm)" },
+        "endTime": { "type": "string", "description": "Horário de término (HH:mm)" },
+        "purpose": { "type": "string", "description": "Motivo da viagem / rota / atendimento a cliente" },
+        "fuelLevel": { "type": "string", "description": "Nível de combustível (1/4, 1/2, 3/4, Cheio)" },
+        "checklistNotes": { "type": "string", "description": "Observações do checklist ou avarias" },
+        "status": { "type": "string", "enum": ["em_andamento", "finalizado"], "description": "Status da jornada" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["adminId", "vehicleId", "driverId", "startKm", "date", "status"]
+    },
+    "Maintenance": {
+      "title": "Maintenance",
+      "description": "Registro de manutenção preventiva e corretiva",
+      "type": "object",
+      "properties": {
+        "adminId": { "type": "string", "description": "ID do gestor" },
+        "vehicleId": { "type": "string", "description": "ID do veículo" },
+        "vehiclePlate": { "type": "string", "description": "Placa do veículo" },
+        "serviceType": { "type": "string", "description": "Tipo de serviço (Troca de Óleo, Pneus, Pastilhas, Revisão 10.000 KM, etc.)" },
+        "kmAtService": { "type": "number", "description": "KM do veículo no momento da manutenção" },
+        "nextKmTarget": { "type": "number", "description": "Próxima KM estimada para nova revisão" },
+        "cost": { "type": "number", "description": "Valor gasto em R$" },
+        "date": { "type": "string", "description": "Data da realização" },
+        "workshop": { "type": "string", "description": "Oficina ou fornecedor" },
+        "notes": { "type": "string", "description": "Detalhes dos itens substituídos" },
+        "status": { "type": "string", "enum": ["agendada", "concluida"], "description": "Status da manutenção" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["adminId", "vehicleId", "serviceType", "kmAtService", "date", "status"]
+    },
+    "Fine": {
+      "title": "Fine",
+      "description": "Registro de multas e infrações de trânsito",
+      "type": "object",
+      "properties": {
+        "adminId": { "type": "string", "description": "ID do gestor" },
+        "vehicleId": { "type": "string", "description": "ID do veículo" },
+        "vehiclePlate": { "type": "string", "description": "Placa do veículo" },
+        "driverId": { "type": "string", "description": "ID do condutor no momento da infração" },
+        "driverName": { "type": "string", "description": "Nome do condutor associado" },
+        "date": { "type": "string", "description": "Data da infração" },
+        "infraction": { "type": "string", "description": "Descrição da infração (ex: Excesso de velocidade)" },
+        "amount": { "type": "number", "description": "Valor da multa em R$" },
+        "points": { "type": "number", "description": "Pontos na CNH" },
+        "status": { "type": "string", "enum": ["pendente", "paga", "recurso"], "description": "Status do pagamento da multa" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["adminId", "vehicleId", "infraction", "amount", "date", "status"]
+    }
+  },
+  "firestore": {
+    "/vehicles/{vehicleId}": {
+      "schema": "Vehicle",
+      "description": "Coleção de veículos da frota"
+    },
+    "/drivers/{driverId}": {
+      "schema": "Driver",
+      "description": "Coleção de motoristas cadastrados"
+    },
+    "/dailyTrips/{tripId}": {
+      "schema": "DailyTrip",
+      "description": "Coleção de registros de uso diário (KM inicial e final)"
+    },
+    "/maintenances/{maintenanceId}": {
+      "schema": "Maintenance",
+      "description": "Histórico e agendamento de manutenções preventivas e corretivas"
+    },
+    "/fines/{fineId}": {
+      "schema": "Fine",
+      "description": "Multas e infrações atreladas aos carros e condutores"
+    }
+  }
+}
